@@ -3,7 +3,17 @@
 
 # include "libft.h"
 
-void	function1(int arg);
-void	encode(char c, int pid);
+enum e_returns{SUCCESS, FAILURE};
+
+/* client */
+
+int		send_letter(char c, int pid);
+int		send_string(char *str, int pid);
+
+/* server */
+
+void	signal_handler(int signal);
+int		init_string(char **str_ptr);
+char	*append_char(char **str_ptr, char c);
 
 #endif

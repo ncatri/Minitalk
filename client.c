@@ -6,32 +6,49 @@
 int main(int argc, char **argv)
 {
 	int		server_pid;
-	char	*message;
-	char	octet[8];
 
 	if (argc != 3)
 	{
 		printf("usage: ./client [pid] [message]\n");
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	server_pid = ft_atoi(argv[1]);
-	message = argv[2];
-	while (*message)
-	{
-		encode(*message, server_pid);
-		message++;
-	}
-	printf("%c\n", octet[0]);
-	kill(server_pid, SIGUSR1);
+	if (send_string(argv[2], server_pid) == FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+
 }
 
-void	encode(char c, int pid)
+int	send_string(char *str, int pid)
 {
-	(void)pid;
+	if (!str)
+		return (FAILURE);
+	while (*str)
+	{
+		if (send_letter(*str, pid) == FAILURE)
+			return (FAILURE);
+		str++;
+	}
+	if (send_letter('\0', pid) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+int	send_letter(char c, int pid)
+{
 	int	i;	
+	int	signal;
 
 	i = 8;
 	while (--i >= 0)
-		printf("%d ", (c >> i) & 0x01);
-	write(1, "\n", 1);
+	{
+		if ((c >> i) & 1) // we got a 1
+			signal = SIGUSR2;
+		else
+			signal = SIGUSR1;
+		if (kill(pid, signal) == -1)
+			return (FAILURE);
+		usleep(100);
+	}
+	return (SUCCESS);
 }
