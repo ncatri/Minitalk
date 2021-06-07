@@ -38,8 +38,6 @@ void	signal_handler(int signal)
 		{
 			printf("in signal_handler, c: %c\n", c);
 			*message = append_char(*message, c);
-			bit_count = 0;
-			c = 0;
 		}
 		else
 		{
@@ -48,6 +46,8 @@ void	signal_handler(int signal)
 			free(message);
 			message = NULL;
 		}
+		bit_count = 0;
+		c = 0;
 	}
 }
 
