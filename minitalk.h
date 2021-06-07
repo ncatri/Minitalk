@@ -13,7 +13,10 @@ int		send_string(char *str, int pid);
 /* server */
 
 void	signal_handler(int signal);
-int		init_string(char **str_ptr);
-char	*append_char(char **str_ptr, char c);
+char	**init_strptr(void);
+char	*append_char(char *str, char c);
+
+/* debug */
+void	print_bits(char c);
 
 #endif
