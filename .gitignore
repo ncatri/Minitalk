@@ -3,3 +3,5 @@ libft
 a.out
 client
 server
+client.dSYM
+server.dSYM

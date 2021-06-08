@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "minitalk.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int		server_pid;
 
@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 	if (send_string(argv[2], server_pid) == FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-
 }
 
 int	send_string(char *str, int pid)
@@ -36,19 +35,19 @@ int	send_string(char *str, int pid)
 
 int	send_letter(char c, int pid)
 {
-	int	i;	
+	int	i;
 	int	signal;
 
 	i = 8;
 	while (--i >= 0)
 	{
-		if ((c >> i) & 1) // we got a 1
+		if ((c >> i) & 1)
 			signal = SIGUSR2;
 		else
 			signal = SIGUSR1;
 		if (kill(pid, signal) == -1)
 			return (FAILURE);
-		usleep(100);
+		usleep(150);
 	}
 	return (SUCCESS);
 }

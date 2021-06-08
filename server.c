@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include "minitalk.h"
 
-int main(void)
+int	main(void)
 {
-	int pid;
+	int	pid;
 
 	pid = getpid();
 	ft_putnbr_fd(pid, 1);
@@ -22,23 +22,17 @@ void	signal_handler(int signal)
 	static int				bit_count = 0;
 	static unsigned char	c = 0;
 
-	if (!message) 
+	if (!message)
 		message = init_strptr();
 	if (!message)
 		return ;
 	c <<= 1;
 	if (signal == SIGUSR2)
 		c |= 1;
-	printf("signal: %d, bit_count: %d, bits: ", signal, bit_count);
-	print_bits(c);
-	bit_count++;
-	if (bit_count == 8)
+	if (++bit_count == 8)
 	{
 		if (c)
-		{
-			printf("in signal_handler, c: %c\n", c);
 			*message = append_char(*message, c);
-		}
 		else
 		{
 			ft_putstr_fd(*message, 1);
@@ -56,14 +50,11 @@ char	*append_char(char *str, char c)
 	char	to_append[2];
 	char	*tmp;
 
-	printf("in append_char, c: %c\n", c);
 	to_append[0] = c;
 	to_append[1] = '\0';
-	printf("to_append: %s\n", to_append);
 	tmp = ft_strjoin(str, to_append);
 	free(str);
-	printf("tmp: %s\n", tmp);
-	return (tmp);	
+	return (tmp);
 }
 
 char	**init_strptr(void)
@@ -71,7 +62,7 @@ char	**init_strptr(void)
 	char	**str;
 
 	str = NULL;
-	str = malloc(sizeof(char*));
+	str = malloc(sizeof(char *));
 	if (str)
 	{
 		*str = ft_strdup("");
@@ -83,7 +74,7 @@ char	**init_strptr(void)
 
 void	print_bits(char c)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < 8)
