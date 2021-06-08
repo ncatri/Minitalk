@@ -13,7 +13,7 @@ int	main(void)
 	signal(SIGUSR1, signal_handler);
 	signal(SIGUSR2, signal_handler);
 	while (1)
-		;
+		pause();
 }
 
 void	signal_handler(int signal)
@@ -35,7 +35,7 @@ void	signal_handler(int signal)
 			*message = append_char(*message, c);
 		else
 		{
-			ft_putstr_fd(*message, 1);
+			ft_putendl_fd(*message, 1);
 			free(*message);
 			free(message);
 			message = NULL;
