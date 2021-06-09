@@ -13,7 +13,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	server_pid = ft_atoi(argv[1]);
-	if (send_string(argv[2], server_pid) == FAILURE)
+	if (server_pid < PID_SAFEGUARD || \
+			send_string(argv[2], server_pid) == FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -50,4 +51,14 @@ int	send_letter(char c, int pid)
 		usleep(150);
 	}
 	return (SUCCESS);
+}
+
+void	print_bits(char c)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 8)
+		printf("%d ", !!((c << i) & 0x80));
+	printf("\n");
 }

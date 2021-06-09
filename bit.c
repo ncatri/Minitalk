@@ -1,8 +1,6 @@
 #include <stdio.h>
 
-void	print_bits(char c);
-
-int main(void)
+int test_bits(void)
 {
 	char c;
 

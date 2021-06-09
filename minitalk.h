@@ -5,6 +5,8 @@
 
 enum e_returns{SUCCESS, FAILURE};
 
+# define PID_SAFEGUARD (100)
+
 /* client */
 
 int		send_letter(char c, int pid);

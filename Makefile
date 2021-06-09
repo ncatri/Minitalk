@@ -16,16 +16,16 @@ LIBFT = libft
 all: libft_ server client
 
 ifeq ($(UNAME), Linux)
-server: server.c
+server: server.c minitalk.h $(LIBFT)/$(LIBFT).a
 	 $(COMPIL) server.c -o server -L$(LIBFT) -lft
 
-client: client.c
+client: client.c minitalk.h $(LIBFT)/$(LIBFT).a
 	$(COMPIL) client.c -o client -L$(LIBFT) -lft
 else
-server: server.c
+server: server.c minitalk.h $(LIBFT)/$(LIBFT).a
 	 $(COMPIL) server.c -o server
 
-client: client.c
+client: client.c minitalk.h $(LIBFT)/$(LIBFT).a
 	$(COMPIL) client.c -o client
 endif
 
@@ -33,11 +33,15 @@ libft_:
 	$(MAKE) -C $(LIBFT)
 
 clean:
-	$(RM) server
-	$(RM) client
 	$(RM) -r server.dSYM
 	$(RM) -r client.dSYM
 
-re: clean all
+fclean: clean
+	$(MAKE) fclean -C $(LIBFT)
+	$(RM) server
+	$(RM) client
 
-.PHONY: all clean re
+
+re: fclean all
+
+.PHONY: all clean fclean re
